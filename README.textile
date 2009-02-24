@@ -1,0 +1,11 @@
+Sometimes when writing HTTP clients you want to be able to see what's going on with the server. For instance to see if your requests are being made to the correct url or with the relevant method and data. 
+
+This application is a _very simple_ HTTP server which simple logs details of the incoming requests to the file system. Instead of pointing your client at it's intended target, point it at an instance of this service and simply tail the log files.
+
+h2. Future
+
+Their are a few things I'd still like to work on:
+
+* Log content from POST and PUT requests
+* Port to App Engine
+* Find a good small WSGI server, something in between using a full web server like Nginx and running the local development server shipped with Django.
