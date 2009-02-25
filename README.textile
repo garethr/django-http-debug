@@ -6,5 +6,6 @@ h2. Future
 
 Their are a few things I'd still like to work on:
 
+* -Log content from POST and PUT requests- +Support added+
 * Port to App Engine
-* Find a good small WSGI server, something in between using a full web server like Nginx and running the local development server shipped with Django.
+* -Find a good small WSGI server, something in between using a full web server like Nginx and running the local development server shipped with Django.- +Using "Spawning":http://pypi.python.org/pypi/Spawning/0.7+
