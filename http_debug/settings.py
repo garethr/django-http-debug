@@ -76,3 +76,5 @@ NUMBER_LOG_FILES = 5
 REQUEST_EXCLUDES = (
     'favicon.ico',
 )
+
+TEST_RUNNER='http_debug.lib.nodatabase.run_tests'
