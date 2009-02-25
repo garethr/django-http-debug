@@ -64,7 +64,6 @@ MAX_LOG_FILE_SIZE = 1000000
 # each will have it's own set of files 
 LOGS = (
     'access',
-    'error',
 )
 
 # we have log file rotation in place so we need to

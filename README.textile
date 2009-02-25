@@ -6,6 +6,5 @@ h2. Future
 
 Their are a few things I'd still like to work on:
 
-* Log content from POST and PUT requests
 * Port to App Engine
 * Find a good small WSGI server, something in between using a full web server like Nginx and running the local development server shipped with Django.
