@@ -1,1 +1,2 @@
+export PYTHONPATH=.:$PYTHONPATH
 spawn --factory=spawning.django_factory.config_factory settings --port 8001 -s 4 -t 100 --host localhost
