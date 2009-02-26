@@ -4,9 +4,6 @@ from django.core import mail
 from django.test import TestCase
 from django.conf import settings
 
-# we want to keep our test logs seperate from our normal logs
-settings.LOG_FILE = "%s_test" % settings.LOG_FILE
-
 class NoDatabaseTestCase(TestCase):
     """
     TestCase replacement to ignore all the database
@@ -22,6 +19,14 @@ class NoDatabaseTestCase(TestCase):
         mail.outbox = []
 
 class ViewTests(NoDatabaseTestCase):
+    
+    def setUp(self):
+        """
+        We want to keep our test logs seperate from our normal logs
+        """
+        # but we want to stash the original so we can put it back later
+        self.original_log_file = settings.LOG_FILE
+        settings.LOG_FILE = "%s_test" % settings.LOG_FILE
     
     def tearDown(self):
         """
@@ -43,6 +48,8 @@ class ViewTests(NoDatabaseTestCase):
                 # method which creates the log file
                 # in which case we don't care
                 pass
+        # remember to put things back to how they were
+        settings.LOG_FILE = self.original_log_file
    
     def test_logging_for_get(self):
         response = self.client.get('/test')
