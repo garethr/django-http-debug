@@ -13,8 +13,8 @@ class NoDatabaseTestCase(TestCase):
     stuff, mainly fixtures and flush
     """
     def _pre_setup(self):
-        "Override the offending method"
-        # we do want some of the featues from the defaul method
+        "Override the offending method which talks to the DB"
+        # we do want some of the featues from the default method
         if hasattr(self, 'urls'):
             self._old_root_urlconf = settings.ROOT_URLCONF
             settings.ROOT_URLCONF = self.urls
@@ -30,7 +30,11 @@ class ViewTests(NoDatabaseTestCase):
         """
         for log in settings.LOGS:
             try:
-                # Open the log file and write a blank string to it, then close the file
+                # Open the log file and write a blank string to it, 
+                # then close the file. Otherwise the file builds 
+                # up across multiple tests.
+                # the test runner itself gets rid of all the files
+                # after each full run
                 handle = open("%s_%s" % (settings.LOG_FILE, log), 'w')
                 handle.write('')
                 handle.close()
@@ -48,8 +52,18 @@ class ViewTests(NoDatabaseTestCase):
             assert True
         else:
             assert False
+
+    def test_logging_for_post(self):
+        response = self.client.post('/test', {'data': 'test'})
+        handle = open("%s_access" % settings.LOG_FILE, 'r')
+        content = handle.read()
+        assert "POST" in content
+        if content[-11:-2] == "data=test":
+            assert True
+        else:
+            assert False
         
-    def test_normal_view(self):
+    def test_normal_views(self):
         response = self.client.get('/test')
         self.assertContains(response, "OK")
         response = self.client.get('/test?test=test')
